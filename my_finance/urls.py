@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from my_finance import settings
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path('', admin.site.urls),
 ]
+if not settings.DEBUG:
+    urlpatterns += staticfiles_urlpatterns()
