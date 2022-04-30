@@ -1,6 +1,6 @@
-from django.contrib.admin import ModelAdmin
 from django.db.models import Sum, Q
 from dds.models import Operation
+from django.contrib.admin import ModelAdmin
 
 
 class ReportAdmin(ModelAdmin):

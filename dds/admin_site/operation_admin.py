@@ -1,6 +1,5 @@
-from django.contrib.admin import ModelAdmin
-
 from report.models import ReportOfDate
+from django.contrib.admin import ModelAdmin
 
 
 class OperationAdmin(ModelAdmin):
@@ -25,8 +24,3 @@ class OperationAdmin(ModelAdmin):
                 report.income += obj.amount
         ReportOfDate.objects.bulk_update(need_update, ['total', 'expenses', 'income'])
         obj.save()
-
-    def has_change_permission(self, request, obj=None):
-        if request.user and request.user.is_superuser:
-            return True
-        return False

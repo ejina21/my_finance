@@ -1,0 +1,36 @@
+GROUPS = {
+    "admin": {
+        'Can add Финансовая операция', 'Can delete Финансовая операция',
+        'Can change Финансовая операция', 'Can view Финансовая операция',
+        'Can add Пользователь', 'Can delete Пользователь',
+        'Can change Пользователь', 'Can view Пользователь',
+        'Can add Статья доходов/расходов', 'Can delete Статья доходов/расходов',
+        'Can change Статья доходов/расходов', 'Can view Статья доходов/расходов',
+        'Can add Отчет', 'Can delete Отчет',
+        'Can change Отчет', 'Can view Отчет',
+    },
+    "user": {
+        'Can add Финансовая операция',
+        'Can view Финансовая операция',
+        'Can add Статья доходов/расходов',
+        'Can view Статья доходов/расходов',
+        'Can add Отчет', 'Can delete Отчет',
+        'Can change Отчет', 'Can view Отчет',
+    },
+}
+ARTICLES = (
+    ('income', 'Зарплата'),
+    ('income', 'Подарок'),
+    ('income', 'Другое'),
+    ('income', 'Проценты по вкладу'),
+    ('expenses', 'Бензин'),
+    ('expenses', 'Еда'),
+    ('expenses', 'Мобильная связь'),
+    ('expenses', 'Подарок'),
+    ('expenses', 'Другое'),
+    ('expenses', 'Хоз.нужды'),
+    ('expenses', 'Равзлечения'),
+    ('expenses', 'Ремонт'),
+    ('expenses', 'Аренда'),
+    ('expenses', 'Комуналка'),
+)
