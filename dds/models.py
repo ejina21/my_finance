@@ -10,7 +10,7 @@ class CustomUser(AbstractUser):
 
     role = models.CharField(max_length=10, choices=Role.choices, default=Role.USER, verbose_name='Роль')
     salary = models.PositiveIntegerField(verbose_name='Зарплата', default=0)
-    cash_sum = models.PositiveIntegerField(verbose_name='Средств в наличии', default=0)
+    cash_sum = models.IntegerField(verbose_name='Средств в наличии', default=0)
 
     class Meta:
         ordering = ('id',)

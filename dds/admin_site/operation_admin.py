@@ -25,6 +25,11 @@ class OperationAdmin(ModelAdmin):
                 report.total += obj.amount
                 report.income += obj.amount
         ReportOfDate.objects.bulk_update(need_update, ['total', 'expenses', 'income'])
+        if obj.is_purchase:
+            request.user.cash_sum -= obj.amount
+        else:
+            request.user.cash_sum += obj.amount
+        request.user.save()
         obj.user = request.user
         obj.save()
 
