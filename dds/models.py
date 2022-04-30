@@ -49,6 +49,7 @@ class Article(models.Model):
     class Meta:
         verbose_name = 'Статья доходов/расходов'
         verbose_name_plural = 'Статьи доходов/расходов'
+        unique_together = ('type_operation', 'name')
 
     def __str__(self):
         return f'{self.get_type_operation_display()}_{self.name}'
