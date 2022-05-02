@@ -14,14 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
-from dds.views import MainView
 from django.conf.urls.static import static
 from my_finance import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', MainView.as_view()),
+    path('', include('dds.urls')),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+# admin.site.login = CustomLoginView.as_view()
+# admin.site.logout = CustomLogoutView.as_view()

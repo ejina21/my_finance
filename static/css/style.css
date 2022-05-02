@@ -1,16 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orelega+One');
 body {
     background: #08131f;
-    font-family: 'Lato', sans-serif;
-    display: flex;
+    font-family: 'Orelega One', sans-serif;
+    display: block;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
 
 .container {
-    width: 350px;
-    height: 720px;
+    width: 375px;
+    height: 812px;
     background: #1c253f;
     border-radius: 40px;
     margin-top: 10px;
@@ -95,16 +95,17 @@ span.expense-label {
     color: #fff0ff;
     position: relative;
     z-index: 0;
+    font-size: 20px;
 }
 
 span.expense-label::before {
     content: "";
     position: absolute;
     background: #4d2472;
-    width: 64px;
-    height: 9px;
-    top: 38px;
-    left: 4px;
+    width: 60px;
+    height: 8px;
+    top: 28px;
+    left: 8px;
     z-index: -1;
 }
 

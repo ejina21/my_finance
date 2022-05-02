@@ -1,0 +1,22 @@
+{% extends "base_template.html" %}
+{% block content %}
+    <div class="text-center mt-5">
+        <span class="heading">Главная</span>
+    </div>
+
+    <div class="text-center">
+        <span class="sub-heading">Информация о профиле</span>
+    </div>
+
+    <div class="d-flex flex-row mt-4 mx-2 align-items-center">
+        <span class="add-filter px-4 py-4">
+            <i class="fas fa-plus filter-icon"></i>
+            Добавить операцию
+        </span>
+    </div>
+    <div class="d-flex flex-row mt-4 mx-2 align-items-center">
+        <a href="/report">
+            <span class="filter px-3 py-3 mr-2 filter-active">Отчеты</span>
+        </a>
+    </div>
+{% endblock %}

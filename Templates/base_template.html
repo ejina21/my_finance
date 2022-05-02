@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои финансы</title>
+    <script src="https://kit.fontawesome.com/18a6e105bc.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        {% block head %}
+            <div class="pt-4 px-2 d-flex flex-row justify-content-between">
+                <a href="#">
+                    <i class="fas fa-arrow-left nav-icon"></i>
+                </a>
+                <a href="/admin/">
+                    <i class="fa-solid fa-bomb nav-icon position-relative"></i>
+                </a>
+            </div>
+        {% endblock %}
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</body>
+
+</html>

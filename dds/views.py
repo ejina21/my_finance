@@ -8,7 +8,7 @@ from dds.forms import UserForm
 
 class MainView(View):
     form_class = UserForm
-    template_name = 'test.html'
+    template_name = 'main_page.html'
 
     def get(self, request, *args, **kwargs):
         user_initial = {
@@ -24,3 +24,10 @@ class MainView(View):
             return HttpResponseRedirect('/success/')
 
         return render(request, self.template_name, {'form': form})
+
+
+class ReportView(View):
+    template_name = 'reports.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, {})
