@@ -29,7 +29,7 @@ ARTICLES = (
     ('expenses', 'Подарок'),
     ('expenses', 'Другое'),
     ('expenses', 'Хоз.нужды'),
-    ('expenses', 'Равзлечения'),
+    ('expenses', 'Развлечения'),
     ('expenses', 'Ремонт'),
     ('expenses', 'Аренда'),
     ('expenses', 'Комуналка'),

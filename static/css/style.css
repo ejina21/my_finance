@@ -50,6 +50,9 @@ div.menu {
     color: #585F8B;
     border-radius: 10px;
     font-weight: 900;
+    overflow: hidden;
+    overflow-x: scroll;
+    white-space:nowrap;
     font-size: 12px;
     letter-spacing: 1px;
     cursor: pointer;
@@ -75,8 +78,7 @@ span.filter {
 span.add-filter {
     background: #162037;
     border-radius: 10px;
-    color: #585F8B;
-    border: 1px solid #585F8B;
+    color: #fff0ff;
     font-weight: 900;
     font-size: 12px;
     letter-spacing: 1px;
@@ -129,13 +131,38 @@ div.bar-2 {
     border-radius: 5px;
 }
 
-span.chart-label {
-    font-size: 10px;
+td.chart-label {
+    font-size: 12px;
     font-weight: 900;
-    color: #585F8B;
+    color: #fff0ff;
 }
-
+div.report-bg {
+    overflow-y: scroll;
+    background: #162037;
+    border-radius: 25px;
+    height: 45%;
+    letter-spacing: 1px;
+}
 div.chart-bg {
     background: #162037;
     border-radius: 25px;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+span.add-button {
+    background: #162037;
+    border-radius: 10px;
+    color: #fff0ff;
+    border: 1px solid #585F8B;
+    font-weight: 900;
+    font-size: 16px;
+    letter-spacing: 2px;
+    cursor: pointer;
+}
+
+span.add-button:hover {
+    border: 1px solid #fff0ff;
 }

@@ -35,7 +35,7 @@ class Operation(models.Model):
         verbose_name_plural = 'Финансовые операции'
 
     def __str__(self):
-        return f'{self.amount}_{self.article}'
+        return f'{self.amount} {self.article}'
 
 
 class Article(models.Model):
@@ -52,4 +52,4 @@ class Article(models.Model):
         unique_together = ('type_operation', 'name')
 
     def __str__(self):
-        return f'{self.get_type_operation_display()}_{self.name}'
+        return f'{self.get_type_operation_display()} {self.name}'

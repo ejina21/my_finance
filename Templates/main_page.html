@@ -7,16 +7,34 @@
     <div class="text-center">
         <span class="sub-heading">Информация о профиле</span>
     </div>
-
-    <div class="d-flex flex-row mt-4 mx-2 align-items-center">
-        <span class="add-filter px-4 py-4">
-            <i class="fas fa-plus filter-icon"></i>
-            Добавить операцию
-        </span>
+    <div class="d-flex flex-column chart-bg mx-2 mt-4">
+        <div class="d-flex flex-column align-items-center p-2">
+            <span class="heading">{{ user.name }}</span>
+        </div>
+        <div class="d-flex flex-column align-items-center p-2">
+            <span class="expense-label">Сумма:</span>
+            <span class="expense">{{ user.cash }}</span>
+        </div>
     </div>
-    <div class="d-flex flex-row mt-4 mx-2 align-items-center">
+    <div class="d-flex flex-column mt-4 mx-2 p-3 align-items-center">
         <a href="/report">
-            <span class="filter px-3 py-3 mr-2 filter-active">Отчеты</span>
+            <span class="add-button px-4 py-4">
+                <i class="fas fa-plus filter-icon"></i>
+                Добавить расход
+            </span>
+        </a>
+    </div>
+    <div class="d-flex flex-column mt-4 mx-2 p-3 align-items-center">
+        <a href="/report">
+            <span class="add-button px-4 py-4">
+            <i class="fas fa-plus filter-icon"></i>
+            Добавить доход
+            </span>
+        </a>
+    </div>
+    <div class="d-flex flex-column mt-4 mx-2 p-3 align-items-center">
+        <a href="/report">
+            <span class="add-button px-4 py-4">Отчеты</span>
         </a>
     </div>
 {% endblock %}
