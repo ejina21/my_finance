@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render
 from django.views.generic import View
 from django.http import HttpResponseRedirect
@@ -5,7 +7,7 @@ from django.http import HttpResponseRedirect
 from dds.forms import OperationForm, ReportForm
 from dds.models import Operation
 from report.models import ReportOfDate
-
+from django.core.serializers.json import DjangoJSONEncoder
 
 class MainView(View):
     template_name = 'main_page.html'
@@ -24,9 +26,10 @@ class ReportView(View):
     template_name = 'reports.html'
 
     def get(self, request, *args, **kwargs):
-        reports = ReportOfDate.objects.filter(user=request.user)
-        operations = Operation.objects.filter(user=request.user)
-        return render(request, self.template_name, {'reports': reports, 'operations': operations})
+        reports = ReportOfDate.objects.filter(user=request.user).values('name', 'start_date', 'end_date', 'income', 'expenses', 'total')
+        operations = Operation.objects.filter(user=request.user).values('date', 'amount', 'article__name')
+        operation_json = json.dumps(list(operations), cls=DjangoJSONEncoder)
+        return render(request, self.template_name, {'reports': reports, 'operations': operations, 'operations_json': operation_json})
 
 
 class SendIncomeView(View):

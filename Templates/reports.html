@@ -1,4 +1,5 @@
 {% extends "base_template.html" %}
+{%  load static %}
 {%  block content %}
     <div class="text-center mt-5">
         <span class="heading">Отчеты</span>
@@ -10,7 +11,12 @@
 
     <div class="d-flex flex-row menu mt-2 mx-2 justify-content-between align-items-center">
         {% for report in reports %}
-            <span class="px-4 py-2 active">{{ report.name }}</span>
+            <span income="{{ report.income }}"
+                  expenses="{{ report.expenses }}"
+                  total="{{ report.total }}"
+                  start_date="{{ report.start_date|date:'Y-m-d' }}"
+                  end_date="{{ report.end_date|date:'Y-m-d' }}"
+                  class="reports px-4 py-2">{{ report.name }}</span>
         {% endfor %}
         <a href="/create-report/">
             <span class="add-filter px-4 py-2">
@@ -22,26 +28,19 @@
     <div class="d-flex flex-column mt-3 mx-4">
         <div class="d-flex flex-row justify-content-between align-items-center">
                 <span class="expense-label">Доход:</span>
-                <span class="expense">{{ reports.0.income }} руб</span>
+                <span class="expense" id="income">0 р</span>
         </div>
         <div class="d-flex flex-row justify-content-between align-items-center">
                 <span class="expense-label">Расход:</span>
-                <span class="expense">{{ reports.0.expenses }} руб</span>
+                <span class="expense" id="expenses">0 р</span>
         </div>
         <div class="d-flex flex-row justify-content-between align-items-center">
                 <span class="expense-label">Итого:</span>
-                <span class="expense">{{ reports.0.total }} руб</span>
+                <span class="expense" id="total">0 р</span>
         </div>
     </div>
-    <div class="d-flex flex-column report-bg mx-2 mt-4 pb-2 align-items-center">
-        <span class="sub-heading mt-2">Совершенные операции</span>
-        <table>
-            {% for operation in operations %}
-                <tr>
-                    <td class="chart-label">{{ operation.amount }}</td>
-                    <td class="chart-label pl-4">{{ operation.article }}</td>
-                </tr>
-            {% endfor %}
-        </table>
+    <div style="display: none" id="jsonData" data-json="{{ operations_json }}"></div>
+    <div id="table-operations" class="d-flex flex-column report-bg mx-2 mt-4 pb-2 align-items-center">
     </div>
+    <script src="{% static 'js/change_report.js' %}"></script>
 {% endblock %}
