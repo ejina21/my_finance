@@ -65,6 +65,15 @@ span.active {
     margin: 5px;
 }
 
+input.active {
+    background: linear-gradient(to right, #ce2eff, #a02ff6);
+    border-radius: 15px;
+    color: #fff0ff;
+    margin: 10px;
+    border: none;
+    font-size: 20px;
+}
+
 span.filter {
     border-radius: 10px;
     background: #162037;
@@ -118,17 +127,11 @@ span.expense {
     font-size: 34px;
 }
 
-div.bar-1 {
-    bottom: 0;
-    width: 20px;
-    border-radius: 5px;
-    background: linear-gradient(to bottom, #FF91C2, #FE59FD);
-}
-
-div.bar-2 {
-    width: 20px;
-    background: #2a3350;
-    border-radius: 5px;
+span.label-tag {
+    font-size: 14px;
+    font-weight: 900;
+    color: #585F8B;
+    letter-spacing: 1px;
 }
 
 td.chart-label {
@@ -136,6 +139,7 @@ td.chart-label {
     font-weight: 900;
     color: #fff0ff;
 }
+
 div.report-bg {
     overflow-y: scroll;
     background: #162037;
@@ -143,6 +147,7 @@ div.report-bg {
     height: 45%;
     letter-spacing: 1px;
 }
+
 div.chart-bg {
     background: #162037;
     border-radius: 25px;

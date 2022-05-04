@@ -2,12 +2,12 @@ from django.shortcuts import render
 from django.views.generic import View
 from django.http import HttpResponseRedirect
 
+from dds.forms import OperationForm, ReportForm
 from dds.models import Operation
 from report.models import ReportOfDate
 
 
 class MainView(View):
-    # form_class = UserForm
     template_name = 'main_page.html'
 
     def get(self, request, *args, **kwargs):
@@ -17,15 +17,7 @@ class MainView(View):
             'name': request.user.first_name,
             'cash': request.user.cash_sum,
         }
-        # form = self.form_class(instance=request.user)
         return render(request, self.template_name, {'user': user_initial})
-
-    # def post(self, request, *args, **kwargs):
-    #     form = self.form_class(request.POST)
-    #     if form.is_valid():
-    #         return HttpResponseRedirect('/success/')
-    #
-    #     return render(request, self.template_name, {'form': form})
 
 
 class ReportView(View):
@@ -35,3 +27,60 @@ class ReportView(View):
         reports = ReportOfDate.objects.filter(user=request.user)
         operations = Operation.objects.filter(user=request.user)
         return render(request, self.template_name, {'reports': reports, 'operations': operations})
+
+
+class SendIncomeView(View):
+    form_class = OperationForm
+    template_name = 'create_income.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            income = form.save(commit=False)
+            income.user = request.user
+            income.is_purchase = False
+            income.save()
+            return HttpResponseRedirect('/')
+        return render(request, self.template_name, {'form': form})
+
+
+class SendExpensesView(View):
+    form_class = OperationForm
+    template_name = 'create_expenses.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            expenses = form.save(commit=False)
+            expenses.user = request.user
+            expenses.is_purchase = True
+            expenses.save()
+            return HttpResponseRedirect('/')
+        return render(request, self.template_name, {'form': form})
+
+
+class CreateReportView(View):
+    form_class = ReportForm
+    template_name = 'create_report.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            report = form.save(commit=False)
+            report.user = request.user
+            report.save()
+            form.save_m2m()
+            return HttpResponseRedirect('/report/')
+        return render(request, self.template_name, {'form': form})

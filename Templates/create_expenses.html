@@ -1,0 +1,14 @@
+{% extends "base_template.html" %}
+{%  block content %}
+    <div class="text-center mt-5">
+        <span class="heading">Расход</span>
+    </div>
+
+    <div class="text-center">
+        <span class="sub-heading">Добавьте информацию о расходе</span>
+    </div>
+    <form action="/send-expenses/" method="post">
+        {% csrf_token %}
+        {% include 'style_form.html' %}
+    </form>
+{% endblock %}
