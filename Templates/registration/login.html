@@ -1,0 +1,16 @@
+{% extends "base_template.html" %}
+{% block head %}
+{% endblock %}
+{%  block content %}
+    <div class="text-center mt-5">
+        <span class="heading">Вход</span>
+    </div>
+
+    <div class="text-center">
+        <span class="sub-heading">Введите логин и пароль</span>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        {% include 'style_form.html' %}
+    </form>
+{% endblock %}

@@ -56,6 +56,7 @@ div.menu {
     font-size: 12px;
     letter-spacing: 1px;
     cursor: pointer;
+    min-height: 40px;
 }
 
 span.active {
@@ -86,7 +87,6 @@ span.filter {
 
 span.add-filter {
     background: #162037;
-    border-radius: 10px;
     color: #fff0ff;
     font-weight: 900;
     font-size: 12px;
@@ -170,4 +170,12 @@ span.add-button {
 
 span.add-button:hover {
     border: 1px solid #fff0ff;
+}
+
+td.income {
+    color: lightgreen;
+}
+
+td.expenses {
+    color: #CC3434;
 }

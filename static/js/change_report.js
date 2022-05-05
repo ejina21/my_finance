@@ -4,6 +4,7 @@ function addListenersToSelectAllReports() {
     selectAllReports.forEach((item) => {
         item.addEventListener('click', (evt => openPopup(item)));
     })
+    selectAllReports[0].classList.add('active')
 }
 
 function openPopup(report) {
@@ -19,7 +20,9 @@ function openPopup(report) {
             <= parseInt(item.date.replace(/-/g,""),10) && parseInt(item.date.replace(/-/g,""),10)
             <= parseInt(report.getAttribute('end_date').replace(/-/g,""),10)
         ) {
-            HTML += '<tr><td class="chart-label">' + item.amount + '</td><td class="chart-label pl-4">' + item.article__name + '</td></tr>';
+            HTML += item.is_purchase ?
+                '<tr><td class="chart-label expenses">' + item.amount + '</td><td class="chart-label pl-4">' + item.article__name + '</td></tr>':
+                '<tr><td class="chart-label income">' + item.amount + '</td><td class="chart-label pl-4">' + item.article__name + '</td></tr>';
         }
     })
     HTML += '</table>';

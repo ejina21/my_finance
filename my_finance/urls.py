@@ -20,9 +20,8 @@ from django.conf.urls.static import static
 from my_finance import settings
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
+    path('accounts/', include('django.contrib.auth.urls'), name='login'),
     path('', include('dds.urls')),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-# admin.site.login = CustomLoginView.as_view()
-# admin.site.logout = CustomLogoutView.as_view()

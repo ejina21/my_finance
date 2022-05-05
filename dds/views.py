@@ -5,18 +5,19 @@ from django.views.generic import View
 from django.http import HttpResponseRedirect
 
 from dds.forms import OperationForm, ReportForm
-from dds.models import Operation
+from dds.models import Operation, Article
 from dds.services.count_operation import SaveCountOperation
 from dds.services.count_report import SaveCountReport
 from report.models import ReportOfDate
 from django.core.serializers.json import DjangoJSONEncoder
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class MainView(View):
+
+class MainView(LoginRequiredMixin, View):
     template_name = 'main_page.html'
+    login_url = 'login'
 
     def get(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return HttpResponseRedirect('admin/')
         user_initial = {
             'name': request.user.first_name,
             'cash': request.user.cash_sum,
@@ -24,22 +25,25 @@ class MainView(View):
         return render(request, self.template_name, {'user': user_initial})
 
 
-class ReportView(View):
+class ReportView(LoginRequiredMixin, View):
     template_name = 'reports.html'
+    login_url = 'login'
 
     def get(self, request, *args, **kwargs):
-        reports = ReportOfDate.objects.filter(user=request.user).values('name', 'start_date', 'end_date', 'income', 'expenses', 'total')
-        operations = Operation.objects.filter(user=request.user).values('date', 'amount', 'article__name')
+        reports = ReportOfDate.objects.filter(user=request.user).order_by('-end_date').values('name', 'start_date', 'end_date', 'income', 'expenses', 'total')
+        operations = Operation.objects.filter(user=request.user).values('date', 'amount', 'article__name', 'is_purchase')
         operation_json = json.dumps(list(operations), cls=DjangoJSONEncoder)
         return render(request, self.template_name, {'reports': reports, 'operations': operations, 'operations_json': operation_json})
 
 
-class SendIncomeView(View):
+class SendIncomeView(LoginRequiredMixin, View):
     form_class = OperationForm
     template_name = 'create_income.html'
+    login_url = 'login'
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
+        form.fields['article'].queryset = Article.objects.filter(type_operation=Article.Type.income)
         return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
@@ -58,12 +62,14 @@ class SendIncomeView(View):
         return render(request, self.template_name, {'form': form})
 
 
-class SendExpensesView(View):
+class SendExpensesView(LoginRequiredMixin, View):
     form_class = OperationForm
     template_name = 'create_expenses.html'
+    login_url = 'login'
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
+        form.fields['article'].queryset = Article.objects.filter(type_operation=Article.Type.expenses)
         return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
@@ -82,9 +88,10 @@ class SendExpensesView(View):
         return render(request, self.template_name, {'form': form})
 
 
-class CreateReportView(View):
+class CreateReportView(LoginRequiredMixin, View):
     form_class = ReportForm
     template_name = 'create_report.html'
+    login_url = 'login'
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
