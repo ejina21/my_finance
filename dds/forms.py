@@ -12,6 +12,10 @@ class UserCreationForm(ModelForm):
         model = CustomUser
         fields = ('username', 'first_name', 'cash_sum')
 
+    def __init__(self, *args, **kwargs):
+        super(UserCreationForm, self).__init__(*args, **kwargs)
+        self.fields['username'].label = 'Логин'
+
     def clean_password2(self):
         cd = self.cleaned_data
         if cd['password'] != cd['password2']:
@@ -19,10 +23,20 @@ class UserCreationForm(ModelForm):
         return cd['password2']
 
 
-class OperationForm(ModelForm):
+class OperationFormExpenses(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(OperationFormExpenses, self).__init__(*args, **kwargs)
+        self.fields['article'].label = "Статья расхода"
+
     class Meta:
         model = Operation
         fields = ('date', 'amount', 'comment', 'article')
+
+
+class OperationFormIncome(OperationFormExpenses):
+    def __init__(self, *args, **kwargs):
+        super(OperationFormExpenses, self).__init__(*args, **kwargs)
+        self.fields['article'].label = "Статья дохода"
 
 
 class ReportForm(ModelForm):

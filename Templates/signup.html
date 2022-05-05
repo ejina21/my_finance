@@ -1,7 +1,15 @@
 {% extends "base_template.html" %}
 {% block head %}
+    <div class="pt-4 px-2 d-flex flex-row justify-content-between">
+        <a href='/accounts/login/'>
+            <i class="fas fa-arrow-left nav-icon"></i>
+        </a>
+        <a href="/admin/">
+            <i class="fa-solid fa-bomb nav-icon position-relative"></i>
+        </a>
+    </div>
 {% endblock %}
-{%  block content %}
+{% block content %}
     <div class="text-center mt-5">
         <span class="heading">Регистрация</span>
     </div>

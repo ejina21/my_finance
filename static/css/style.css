@@ -75,6 +75,15 @@ input.active {
     font-size: 20px;
 }
 
+span.clone {
+    background: linear-gradient(to right, #ce2eff, #a02ff6);
+    border-radius: 15px;
+    color: #fff0ff;
+    margin: 10px;
+    border: none;
+    font-size: 20px;
+}
+
 span.filter {
     border-radius: 10px;
     background: #162037;
@@ -196,4 +205,8 @@ input[type=submit].delete-b {
     border: 1px solid #1c253f;
     cursor: pointer;
     border-radius: 10px;
+}
+
+div.login {
+    padding-top: 25%;
 }

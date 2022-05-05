@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.views.generic import View, CreateView, DeleteView
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from dds.forms import OperationForm, ReportForm, UserCreationForm
+from dds.forms import ReportForm, UserCreationForm, OperationFormIncome, OperationFormExpenses
 from dds.models import Operation, Article
 from dds.services.count_operation import SaveCountOperation
 from dds.services.count_report import SaveCountReport
@@ -45,7 +45,7 @@ class ReportView(LoginRequiredMixin, View):
 
 
 class SendIncomeView(LoginRequiredMixin, View):
-    form_class = OperationForm
+    form_class = OperationFormIncome
     template_name = 'create_income.html'
     login_url = 'login'
 
@@ -71,7 +71,7 @@ class SendIncomeView(LoginRequiredMixin, View):
 
 
 class SendExpensesView(LoginRequiredMixin, View):
-    form_class = OperationForm
+    form_class = OperationFormExpenses
     template_name = 'create_expenses.html'
     login_url = 'login'
 
