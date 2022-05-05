@@ -6,6 +6,8 @@ from django.http import HttpResponseRedirect
 
 from dds.forms import OperationForm, ReportForm
 from dds.models import Operation
+from dds.services.count_operation import SaveCountOperation
+from dds.services.count_report import SaveCountReport
 from report.models import ReportOfDate
 from django.core.serializers.json import DjangoJSONEncoder
 
@@ -44,9 +46,14 @@ class SendIncomeView(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             income = form.save(commit=False)
-            income.user = request.user
             income.is_purchase = False
-            income.save()
+            SaveCountOperation(
+                date=form.cleaned_data['date'],
+                user=request.user,
+                article=form.cleaned_data['article'],
+                amount=form.cleaned_data['amount'],
+                obj=income,
+            ).count_and_save_income()
             return HttpResponseRedirect('/')
         return render(request, self.template_name, {'form': form})
 
@@ -63,9 +70,14 @@ class SendExpensesView(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             expenses = form.save(commit=False)
-            expenses.user = request.user
             expenses.is_purchase = True
-            expenses.save()
+            SaveCountOperation(
+                date=form.cleaned_data['date'],
+                user=request.user,
+                article=form.cleaned_data['article'],
+                amount=form.cleaned_data['amount'],
+                obj=expenses,
+            ).count_and_save_expenses()
             return HttpResponseRedirect('/')
         return render(request, self.template_name, {'form': form})
 
@@ -82,8 +94,13 @@ class CreateReportView(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             report = form.save(commit=False)
-            report.user = request.user
-            report.save()
+            SaveCountReport(
+                start_date=form.cleaned_data['start_date'],
+                end_date=form.cleaned_data['end_date'],
+                user=request.user,
+                articles=form.cleaned_data['articles'],
+                obj=report,
+            ).count_and_save()
             form.save_m2m()
             return HttpResponseRedirect('/report/')
         return render(request, self.template_name, {'form': form})

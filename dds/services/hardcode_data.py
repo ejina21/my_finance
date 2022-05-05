@@ -15,7 +15,7 @@ GROUPS = {
         'Can add Статья доходов/расходов',
         'Can view Статья доходов/расходов',
         'Can add Отчет', 'Can delete Отчет',
-        'Can change Отчет', 'Can view Отчет',
+        'Can view Отчет',
     },
 }
 ARTICLES = (
