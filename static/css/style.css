@@ -179,3 +179,21 @@ td.income {
 td.expenses {
     color: #CC3434;
 }
+
+div.delete-b {
+    position: fixed;
+    width: 375px;
+    justify-content: center;
+    align-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+input[type=submit].delete-b {
+    padding:5px 15px;
+    background: #585F8B;
+    color: #fff0ff;
+    border: 1px solid #1c253f;
+    cursor: pointer;
+    border-radius: 10px;
+}

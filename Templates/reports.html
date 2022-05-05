@@ -27,6 +27,12 @@
             </span>
         </a>
     </div>
+    <div id="del-div" style="display: none" class="delete-b">
+        <form id="del-button" action="#" method="post">
+            {% csrf_token %}
+            <input class="delete-b" type="submit" value="Удалить" />
+        </form>
+    </div>
     <div class="d-flex flex-column mt-3 mx-4">
         <div class="d-flex flex-row justify-content-between align-items-center">
                 <span class="expense-label">Доход:</span>
@@ -59,12 +65,6 @@
             {% endfor %}
         </table>
     </div>
-    <div class="d-flex flex-column mx-2 mt-4 pb-2 align-items-center">
-        <form id="del-button" style="display: none" action="#" method="post">
-            {% csrf_token %}
-            <input type="submit" value="Delete" />
-        </form>
-    </div>
     <script src="{% static 'js/change_report.js' %}"></script>
     <script>
         function del() {
@@ -74,8 +74,8 @@
             del_button.action = "{% url 'del_report' 0 %}".replace('0', report.getAttribute('pk'))
         }
         function callback() {
-            const del_button = document.getElementById('del-button');
-            del_button.style.display = 'block'
+            const del_button = document.getElementById('del-div');
+            del_button.style.display = 'flex'
         }
         del()
     </script>

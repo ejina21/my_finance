@@ -39,4 +39,13 @@ function createTable(report){
     table.innerHTML = HTML;
 }
 
+const ModalBackground = document.querySelector('.container');
+
+ModalBackground.addEventListener('click', (evt) => {
+    const button = document.getElementById('del-div')
+    if (button.style.display === 'flex') {
+        button.style.display = 'none';
+    }
+})
+
 addListenersToSelectAllReports();
