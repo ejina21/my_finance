@@ -2,21 +2,31 @@ const selectAllReports = Array.from(document.querySelectorAll('span.reports'));
 
 function addListenersToSelectAllReports() {
     selectAllReports.forEach((item) => {
-        item.addEventListener('click', (evt => openPopup(item)));
+        item.addEventListener('click', (evt => changeData(item)));
     })
     selectAllReports[0].classList.add('active')
 }
 
-function openPopup(report) {
+function changeData(report) {
     const old_report = document.querySelector('span.active');
-    const table = document.getElementById('table-operations');
     document.getElementById('income').textContent = report.getAttribute('income') + ' р';
     document.getElementById('expenses').textContent = report.getAttribute('expenses') + ' р';
     document.getElementById('total').textContent = report.getAttribute('total') + ' р';
+    createTable(report)
+    if (old_report) {
+        old_report.classList.remove('active');
+    }
+    report.classList.add('active');
+    del()
+}
+
+function createTable(report){
+    const table = document.getElementById('table-operations');
     const operations = JSON.parse(document.getElementById('jsonData').getAttribute('data-json'));
     let HTML = '<span class="sub-heading mt-2">Совершенные операции</span><table>';
     operations.forEach((item) => {
-        if (parseInt(report.getAttribute('start_date').replace(/-/g,""),10)
+        if (report.getAttribute('articles').includes(item.article) &&
+            parseInt(report.getAttribute('start_date').replace(/-/g,""),10)
             <= parseInt(item.date.replace(/-/g,""),10) && parseInt(item.date.replace(/-/g,""),10)
             <= parseInt(report.getAttribute('end_date').replace(/-/g,""),10)
         ) {
@@ -27,10 +37,6 @@ function openPopup(report) {
     })
     HTML += '</table>';
     table.innerHTML = HTML;
-    if (old_report) {
-        old_report.classList.remove('active');
-    }
-    report.classList.add('active');
 }
 
 addListenersToSelectAllReports();

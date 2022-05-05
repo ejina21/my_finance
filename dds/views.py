@@ -1,16 +1,18 @@
 import json
 
 from django.shortcuts import render
-from django.views.generic import View, CreateView
+from django.views.generic import View, CreateView, DeleteView
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from dds.forms import OperationForm, ReportForm, UserCreationForm
 from dds.models import Operation, Article
 from dds.services.count_operation import SaveCountOperation
 from dds.services.count_report import SaveCountReport
+from dds.services.permisson_mixin import PermissionMixin
 from report.models import ReportOfDate
 from django.core.serializers.json import DjangoJSONEncoder
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.postgres.aggregates import ArrayAgg
 
 
 class MainView(LoginRequiredMixin, View):
@@ -30,8 +32,14 @@ class ReportView(LoginRequiredMixin, View):
     login_url = 'login'
 
     def get(self, request, *args, **kwargs):
-        reports = ReportOfDate.objects.filter(user=request.user).order_by('-end_date').values('name', 'start_date', 'end_date', 'income', 'expenses', 'total')
-        operations = Operation.objects.filter(user=request.user).values('date', 'amount', 'article__name', 'is_purchase')
+        reports = ReportOfDate.objects.filter(user=request.user).order_by('-end_date').annotate(
+            list_article=ArrayAgg('articles')
+        ).values(
+            'pk', 'name', 'start_date', 'end_date', 'income', 'expenses', 'total', 'list_article',
+        )
+        operations = Operation.objects.filter(user=request.user).values(
+            'date', 'amount', 'article__name', 'is_purchase', 'article'
+        )
         operation_json = json.dumps(list(operations), cls=DjangoJSONEncoder)
         return render(request, self.template_name, {'reports': reports, 'operations': operations, 'operations_json': operation_json})
 
@@ -111,6 +119,11 @@ class CreateReportView(LoginRequiredMixin, View):
             form.save_m2m()
             return HttpResponseRedirect('/report/')
         return render(request, self.template_name, {'form': form})
+
+
+class ReportDetailView(PermissionMixin, LoginRequiredMixin, DeleteView):
+    model = ReportOfDate
+    success_url = '/report/'
 
 
 class SignUpView(CreateView):

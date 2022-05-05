@@ -16,6 +16,8 @@
                   total="{{ report.total }}"
                   start_date="{{ report.start_date|date:'Y-m-d' }}"
                   end_date="{{ report.end_date|date:'Y-m-d' }}"
+                  articles="{{ report.list_article }}"
+                  pk="{{ report.pk }}"
                   class="reports px-4 py-2">{{ report.name }}</span>
         {% endfor %}
         <a href="/create-report/">
@@ -44,7 +46,7 @@
         <span class="sub-heading mt-2">Совершенные операции</span>
         <table>
             {% for operation in operations %}
-                {% if operation.date <= reports.0.end_date and operation.date >= reports.0.start_date %}
+                {% if operation.date <= reports.0.end_date and operation.date >= reports.0.start_date and operation.article in reports.0.list_article %}
                     <tr>
                         {% if operation.is_purchase %}
                             <td class="chart-label expenses">{{ operation.amount }}</td>
@@ -57,5 +59,24 @@
             {% endfor %}
         </table>
     </div>
+    <div class="d-flex flex-column mx-2 mt-4 pb-2 align-items-center">
+        <form id="del-button" style="display: none" action="#" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Delete" />
+        </form>
+    </div>
     <script src="{% static 'js/change_report.js' %}"></script>
+    <script>
+        function del() {
+            const report = document.querySelector('span.active')
+            report.addEventListener('contextmenu', callback);
+            const del_button = document.getElementById('del-button');
+            del_button.action = "{% url 'del_report' 0 %}".replace('0', report.getAttribute('pk'))
+        }
+        function callback() {
+            const del_button = document.getElementById('del-button');
+            del_button.style.display = 'block'
+        }
+        del()
+    </script>
 {% endblock %}

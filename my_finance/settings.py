@@ -138,3 +138,8 @@ STATICFILES_DIRS = (
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'site'
 LOGOUT_REDIRECT_URL = 'login'
+
+try:
+    from my_finance.dev_settings import *
+except ImportError:
+    pass
