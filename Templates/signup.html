@@ -3,13 +3,13 @@
 {% endblock %}
 {%  block content %}
     <div class="text-center mt-5">
-        <span class="heading">Вход</span>
+        <span class="heading">Регистрация</span>
     </div>
 
     <div class="text-center">
-        <span class="sub-heading">Введите логин и пароль</span>
+        <span class="sub-heading">Введите данные для регистрации</span>
     </div>
-    <a href="/signup/">Регистрация</a>
+
     <form method="post">
         {% csrf_token %}
         {% include 'style_form.html' %}

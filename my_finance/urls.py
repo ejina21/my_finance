@@ -17,11 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 
 from django.conf.urls.static import static
+
+from dds.views import SignUpView
 from my_finance import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('accounts/', include('django.contrib.auth.urls'), name='login'),
+    path('signup/', SignUpView.as_view(), name='signup'),
     path('', include('dds.urls')),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

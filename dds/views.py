@@ -1,10 +1,10 @@
 import json
 
 from django.shortcuts import render
-from django.views.generic import View
+from django.views.generic import View, CreateView
 from django.http import HttpResponseRedirect
-
-from dds.forms import OperationForm, ReportForm
+from django.urls import reverse
+from dds.forms import OperationForm, ReportForm, UserCreationForm
 from dds.models import Operation, Article
 from dds.services.count_operation import SaveCountOperation
 from dds.services.count_report import SaveCountReport
@@ -110,4 +110,22 @@ class CreateReportView(LoginRequiredMixin, View):
             ).count_and_save()
             form.save_m2m()
             return HttpResponseRedirect('/report/')
+        return render(request, self.template_name, {'form': form})
+
+
+class SignUpView(CreateView):
+    form_class = UserCreationForm
+    template_name = 'signup.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            new_user = form.save(commit=False)
+            new_user.set_password(form.cleaned_data['password'])
+            new_user.save()
+            return HttpResponseRedirect(reverse('login'))
         return render(request, self.template_name, {'form': form})
