@@ -1,5 +1,4 @@
-from django.forms import ModelForm, CharField, PasswordInput, ValidationError
-
+from django.forms import ModelForm, CharField, PasswordInput, ValidationError, DateInput
 from dds.models import CustomUser, Operation
 from report.models import ReportOfDate
 
@@ -30,6 +29,9 @@ class OperationFormExpenses(ModelForm):
 
     class Meta:
         model = Operation
+        widgets = {
+            'date': DateInput(attrs={'type': 'date'}),
+        }
         fields = ('date', 'amount', 'comment', 'article')
 
 
@@ -42,4 +44,8 @@ class OperationFormIncome(OperationFormExpenses):
 class ReportForm(ModelForm):
     class Meta:
         model = ReportOfDate
+        widgets = {
+            'start_date': DateInput(attrs={'type': 'date'}),
+            'end_date': DateInput(attrs={'type': 'date'}),
+        }
         fields = ('name', 'start_date', 'end_date', 'articles')

@@ -69,7 +69,7 @@
     <script>
         function del() {
             const report = document.querySelector('span.active')
-            report.addEventListener('contextmenu', callback);
+            report.addEventListener('dblclick', callback);
             const del_button = document.getElementById('del-button');
             del_button.action = "{% url 'del_report' 0 %}".replace('0', report.getAttribute('pk'))
         }
